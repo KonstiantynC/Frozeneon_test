@@ -20,7 +20,7 @@
                 class="read-more"
                 @click="toggleDescription(product.id)"
               >
-                {{ expandedDescriptions === product.id ? ' ' : ' ...' }}
+                ...
               </span>
             </p>
             <div class="brand_and_discount">
