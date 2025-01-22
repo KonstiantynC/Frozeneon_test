@@ -87,12 +87,9 @@ export default {
       const response = await fetch('https://dummyjson.com/products?limit=100');
       const data = await response.json();
       products.value = data.products;
-      console.log(products.value);
     };
 
     const handleScroll = (event: Event) => {
-      if (isSearching.value) return;
-
       const target = event.target as HTMLElement;
       if (target.scrollTop + target.clientHeight >= target.scrollHeight - 100) {
         loadedCount.value += 20;
@@ -102,6 +99,7 @@ export default {
     const handleSearch = () => {
       isSearching.value = true;
       loadedCount.value = 20;
+      isSearching.value = false;
     };
 
     const truncateDescription = (product: Product) => {
@@ -159,8 +157,9 @@ export default {
 .product-item {
   display: flex;
   padding: 10px;
-  cursor: pointer;
+  cursor: auto;
   margin-bottom: 18px;
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .product-image {
@@ -169,11 +168,20 @@ export default {
   object-fit: cover;
   margin-right: 20px;
   border-radius: 8px;
+  cursor: pointer;
 }
 
 .product-info {
   flex: 1;
 }
+
+
+/* description */
+
+.read-more {
+  cursor: pointer;
+}
+
 
 /* card style */
 .title {
@@ -230,14 +238,12 @@ export default {
 }
 
 .category {
-  background-color:#0c2c17;
+  background-color: #0c2c17;
   color: #39d663;
   padding: 2px 12px;
   border-radius: 13px;
   font-weight: 500;
 }
-
-
 
 .no-results {
   display: flex;
@@ -245,5 +251,16 @@ export default {
   width: 650px;
   font-size: 16px;
   font-weight: 500;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  transform: translateY(20px);
 }
 </style>
